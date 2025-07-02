@@ -34,6 +34,10 @@ class DepocoNetTrainer():
         # self.submaps = submap_handler.SubmapHandler(self.config)
         t_sm = time.time()
         self.submaps = submap_handler.SubMapParser(config)
+        print(f"[DEBUG] Training samples found: {self.submaps.getTrainSize()}")
+        print(f"[DEBUG] Config data paths: {config['dataset']}")  # Verify paths
+        print("[DEBUG] Full training path:{self.submaps.getTrainSet()}") 
+        #print(f"[DEBUG] Number of training samples: {len(self.submaps.train_files)}")
         print(f'Loaded Submaps ({time.time()-t_sm}s')
 
         self.max_nr_pts = self.config["train"]["max_nr_pts"]
@@ -120,6 +124,7 @@ class DepocoNetTrainer():
 
     def getScheduler(self, optimizer, len_data_loader, batch_size):
         number_epochs = self.config['train']['max_epochs']
+        print(f"[DEBUG] len_data_loader: {len_data_loader}, batch_size: {batch_size}")
         steps_per_epoch = int(len_data_loader / batch_size)
         max_lr = self.config["train"]["optimizer"]["max_lr"]
         div_factor = max_lr / \
@@ -150,6 +155,7 @@ class DepocoNetTrainer():
             output_path+'log/'+self.experiment_id+"/")
         batch_size = min(
             (self.config["train"]["batch_size"], self.submaps.getTrainSize()))
+        print("[DEBUG] self.submaps.getTrainSize():", self.submaps.getTrainSize())
 
         ###### Init optimizer ########
         lr = self.config["train"]["optimizer"]["max_lr"]
@@ -380,8 +386,13 @@ if __name__ == "__main__":
     FLAGS, unparsed = parser.parse_known_args()
 
     print('passed flags')
-    config = yaml.safe_load(open(FLAGS.config, 'r'))
+    from ruamel.yaml import YAML
+    yaml = YAML(typ='safe', pure=True)
+    config = yaml.load(open(FLAGS.config, 'r'))
+    #config = yaml.safe_load(open(FLAGS.config, 'r'))
     print('loaded yaml flags')
+    #print("[DEBUG] Loaded config:", config)  # Check if batch_size appears correctly
+    print("[DEBUG] batch_size:", config['train']['batch_size'])
     trainer = DepocoNetTrainer(config)
     print('initialized  trainer')
     trainer.train(verbose=True)
