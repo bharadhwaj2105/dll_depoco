@@ -36,7 +36,7 @@ class DepocoNetTrainer():
         self.submaps = submap_handler.SubMapParser(config)
         print(f"[DEBUG] Training samples found: {self.submaps.getTrainSize()}")
         print(f"[DEBUG] Config data paths: {config['dataset']}")  # Verify paths
-        print("[DEBUG] Full training path:{self.submaps.getTrainSet()}") 
+        print(f"[DEBUG] Full training path:{self.submaps.getTrainSet()}") 
         #print(f"[DEBUG] Number of training samples: {len(self.submaps.train_files)}")
         print(f'Loaded Submaps ({time.time()-t_sm}s')
 
