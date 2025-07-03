@@ -24,13 +24,13 @@ class SubMapParser():
         out_path = os.environ.get(
             'DATA_SUBMAPS', config["dataset"]["data_folders"]["grid_output"])
 
-        self.train_folders = [pcu.path(out_path)+pcu.path(
-            fldid) for fldid in config["dataset"]["data_folders"]["train"]] if config["dataset"]["data_folders"]["train"] else []
-        self.valid_folders = [pcu.path(out_path)+pcu.path(
-            fldid) for fldid in config["dataset"]["data_folders"]["valid"]] if config["dataset"]["data_folders"]["valid"] else []
+        self.train_folders = [pcu.path(os.path.join(out_path,
+            fldid)) for fldid in config["dataset"]["data_folders"]["train"]] if config["dataset"]["data_folders"]["train"] else []
+        self.valid_folders = [pcu.path(os.path.join((out_path,
+            fldid)) for fldid in config["dataset"]["data_folders"]["valid"]] if config["dataset"]["data_folders"]["valid"] else []
         # print('valid folders',self.valid_folders)
-        self.test_folders = [pcu.path(out_path)+pcu.path(
-            fldid) for fldid in config["dataset"]["data_folders"]["test"]] if config["dataset"]["data_folders"]["test"] else []
+        self.test_folders = [pcu.path(os.path.join((out_path,
+            fldid)) for fldid in config["dataset"]["data_folders"]["test"]] if config["dataset"]["data_folders"]["test"] else []
         cols = 3+sum(config['grid']['feature_dim'])
         # Trainingset
         self.train_dataset = SubMapDataSet(data_dirs=self.train_folders,
