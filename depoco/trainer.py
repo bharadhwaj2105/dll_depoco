@@ -108,7 +108,7 @@ class DepocoNetTrainer():
         if not os.path.exists(out_dir+self.experiment_id):
             os.makedirs(out_dir+self.experiment_id, exist_ok=True)
         with open(config_path, 'w') as f:
-            saver = yaml.YAML()
+            saver = YAML()
             saver.dump(self.config, f)
 
     def test(self, best=True):
