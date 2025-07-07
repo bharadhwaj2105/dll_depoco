@@ -21,7 +21,7 @@ import subprocess
 # import depoco.utils.checkpoint as chkpt
 import depoco.architectures.loss_handler as loss_handler
 from tqdm.auto import trange, tqdm
-
+from ruamel.yaml import YAML 
 
 class DepocoNetTrainer():
     def __init__(self, config):
@@ -104,7 +104,7 @@ class DepocoNetTrainer():
         if not os.path.exists(out_dir+self.experiment_id):
             os.makedirs(out_dir+self.experiment_id, exist_ok=True)
         with open(config_path, 'w') as f:
-            saver = yaml.YAML()
+            saver = YAML()
             saver.dump(self.config, f)
 
     def test(self, best=True):
@@ -380,7 +380,9 @@ if __name__ == "__main__":
     FLAGS, unparsed = parser.parse_known_args()
 
     print('passed flags')
-    config = yaml.safe_load(open(FLAGS.config, 'r'))
+    yaml = YAML(typ='safe', pure=True)
+    config = yaml.load(open(FLAGS.config, 'r'))
+    #config = yaml.safe_load(open(FLAGS.config, 'r'))
     print('loaded yaml flags')
     trainer = DepocoNetTrainer(config)
     print('initialized  trainer')

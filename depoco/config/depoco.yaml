@@ -2,10 +2,10 @@
 # training parameters
 ################################################################################
 train:
-  experiment_id: "your_model"
-  max_epochs: 200
+  experiment_id: "depoco_7_7_2025"
+  max_epochs: 100
   use_adam: True
-  batch_size: 3 # batch size
+  batch_size: 32 # batch size
   max_nr_pts: 30000 # nr points
   workers: 0 # number of threads to get data
   optimizer: # Adam
@@ -110,7 +110,7 @@ network:
 ################################################################################
 dataset:
   data_folders:
-    grid_output: "/data/" #path/to/the/submaps/
+    grid_output: "/data" #path/to/the/submaps/
     prefix: "/path/to/kitti/" #only needed for Kitti2Submap conversion (kitti-format)
     train: 
       - "00"
