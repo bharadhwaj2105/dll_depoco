@@ -10,7 +10,6 @@ import torch.optim as optim
 
 import os
 from torch.utils.tensorboard import SummaryWriter
-from ruamel import yaml
 import argparse
 import depoco.architectures.network_blocks as network
 import chamfer3D.dist_chamfer_3D
